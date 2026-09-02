@@ -1,0 +1,20 @@
+{
+  "name": "url-forge-server",
+  "version": "1.0.0",
+  "description": "Node.js and Express API for the url_forge URL shortener.",
+  "type": "module",
+  "main": "src/index.js",
+  "scripts": {
+    "dev": "node --watch src/index.js",
+    "start": "node src/index.js",
+    "check": "node --check src/index.js && node --check src/app.js && node --check src/routes/urlRoutes.js && node --check src/store/urlStore.js && node --check src/utils/slug.js && node --check src/utils/validation.js",
+    "test": "node --test"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.19.2"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "name": "url_forge",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Full-stack URL shortener with a React frontend and Express backend.",
+  "type": "module",
+  "scripts": {
+    "dev": "concurrently \"npm run dev --workspace server\" \"npm run dev --workspace client\"",
+    "start": "npm run start --workspace server",
+    "build": "npm run build --workspace client",
+    "check": "npm run check --workspace server",
+    "test": "npm run test --workspace server",
+    "test:integration": "node tests/integration/url-shortener.test.mjs"
+  },
+  "workspaces": [
+    "client",
+    "server"
+  ],
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  }
+}

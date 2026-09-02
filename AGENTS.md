@@ -2,54 +2,51 @@
 
 ## Project Structure & Module Organization
 
-`url_forge` is currently a starter repository with project documentation only. The intended direction is a full-stack JavaScript app with a React frontend and a Node.js/Express.js backend.
+`url_forge` is a full-stack JavaScript URL shortener with a React frontend and a Node.js/Express.js backend.
 
 Current layout:
 
 ```text
 url_forge/
+|-- client/        # Vite React frontend
+|-- docs/          # API and testing documentation
+|-- server/        # Express API and backend tests
+|-- tests/         # Black-box integration tests
 |-- README.md
 `-- AGENTS.md
 ```
 
-When implementation is added, prefer `client/` for the React app and `server/` for the Express API. Place frontend source under `client/src/`, backend source under `server/src/`, and tests near the code they validate.
+Place frontend source under `client/src/`, backend source under `server/src/`, backend tests under `server/test/`, and cross-service integration tests under `tests/integration/`.
 
 ## Build, Test, and Development Commands
 
-No package files or runnable app commands exist yet. Add scripts to `package.json` as the project is implemented.
-
-Expected future commands:
-
-- `npm install` - install dependencies for the current package.
-- `npm run dev` - run the local development app.
-- `npm test` - run the configured test suite.
-- `npm run build` - build production assets.
-
-If frontend and backend packages are separate, run commands from `client/` and `server/`.
+- `npm install` - install workspace dependencies.
+- `npm run dev` - run the API and Vite frontend together.
+- `npm run build` - build the React frontend.
+- `npm test` - run backend tests.
+- `npm run test:integration` - run black-box HTTP tests against a running server.
 
 ## Coding Style & Naming Conventions
 
-Use modern JavaScript or TypeScript consistently within each package. Keep indentation at 2 spaces. Use `camelCase` for variables and functions, `PascalCase` for React components, and descriptive file names such as `App.jsx`, `urlRoutes.js`, or `urlService.js`.
+Use modern JavaScript ES modules. Keep indentation at 2 spaces. Use `camelCase` for variables and functions, `PascalCase` for React components, and descriptive file names such as `App.jsx`, `urlRoutes.js`, or `urlStore.js`.
 
-Prefer clear API response shapes such as `{ "data": ... }` for success and `{ "error": ... }` for failures once backend routes are added.
+API responses should use `{ "data": ... }` for success and `{ "error": ... }` for failures.
 
 ## Testing Guidelines
 
-No test framework is configured yet. When tests are introduced, document the framework and command in `README.md`.
+Tests use Node's built-in test runner for the backend and integration suite.
 
-Suggested locations:
+- Add backend tests in `server/test/*.test.js`.
+- Add black-box HTTP tests in `tests/integration/*.test.mjs`.
 
-- `client/src/**/*.test.jsx` for React component tests.
-- `server/test/*.test.js` for Express route and service tests.
-
-Run the full test suite before opening a pull request once `npm test` is available.
+Run `npm test` before opening a pull request. Run `npm run test:integration` when changing API behavior.
 
 ## Commit & Pull Request Guidelines
 
-The current history contains a single concise commit: `Initial commit`. Continue using short imperative messages such as `Add README details`, `Create Express server`, or `Build React URL form`.
+The current history uses concise imperative commits such as `Initial commit` and `Add repository contributor guide`. Continue with messages like `Add shorten endpoint` or `Build React URL form`.
 
 Pull requests should include a short summary, test results or a note that tests are not configured, setup notes, and screenshots for UI changes.
 
 ## Security & Configuration Tips
 
-Do not commit `.env` files, secrets, API keys, or generated credentials. When configuration is introduced, document required variables in `.env.example`, such as `PORT` or `BASE_URL`.
+Do not commit `.env` files, secrets, API keys, or generated credentials. Use `.env.example` to document `PORT`, `BASE_URL`, and `CLIENT_ORIGIN`.

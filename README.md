@@ -1,18 +1,19 @@
 # url_forge
 
-`url_forge` is a full-stack JavaScript project for building tools around URL creation, parsing, validation, or transformation.
+`url_forge` is a full-stack JavaScript URL shortener.
 
 The project uses a React.js frontend and a Node.js/Express.js backend.
 
 ## Overview
 
-`url_forge` provides a frontend interface for working with URLs and a backend API for handling URL-related logic such as validation, transformation, storage, or metadata processing.
+`url_forge` provides a React interface for creating short links and an Express API for URL validation, slug creation, redirects, click tracking, and recent-link history.
 
 ## Tech Stack
 
 - React.js for the frontend
 - Node.js for the runtime
 - Express.js for the backend API
+- Vite for frontend development and builds
 - npm for package management
 
 ## Getting Started
@@ -30,19 +31,9 @@ Install dependencies:
 npm install
 ```
 
-If the frontend and backend have separate package files, install dependencies in each folder:
-
-```bash
-cd client
-npm install
-
-cd ../server
-npm install
-```
-
 ## Running The Project
 
-Start the development server:
+Start the React frontend and Express backend together:
 
 ```bash
 npm run dev
@@ -51,13 +42,8 @@ npm run dev
 If the frontend and backend run separately:
 
 ```bash
-# Frontend
-cd client
-npm run dev
-
-# Backend
-cd server
-npm run dev
+npm run dev --workspace client
+npm run dev --workspace server
 ```
 
 The React app typically runs at:
@@ -81,24 +67,31 @@ url_forge/
 |-- client/
 |   |-- src/
 |   `-- package.json
+|-- docs/
 |-- server/
 |   |-- src/
+|   |-- test/
 |   `-- package.json
+|-- tests/
 |-- package.json
 `-- README.md
 ```
 
 ## API
 
-The backend is powered by Express.js. Add API route documentation here as endpoints are implemented.
+The backend is powered by Express.js.
 
-Example endpoints:
+Available endpoints:
 
 ```text
 GET /api/health
 POST /api/urls
-GET /api/urls/:id
+GET /api/urls
+GET /api/urls/:slug
+GET /:slug
 ```
+
+See `docs/api.md` for request and response details.
 
 ## Development
 
@@ -111,13 +104,17 @@ Recommended workflow:
 
 ## Testing
 
-Run tests with:
+Run backend tests with:
 
 ```bash
 npm test
 ```
 
-If frontend and backend tests are separate, run them from their respective folders.
+Run black-box integration tests against a running server with:
+
+```bash
+npm run test:integration
+```
 
 ## License
 
