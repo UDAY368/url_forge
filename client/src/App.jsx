@@ -39,6 +39,7 @@ function App() {
   const [listLoading, setListLoading] = useState(true);
   const [error, setError] = useState('');
   const [copiedId, setCopiedId] = useState('');
+  const [deletingId, setDeletingId] = useState('');
 
   const recentLinks = useMemo(() => links.slice(0, 6), [links]);
 
@@ -137,6 +138,34 @@ function App() {
     }
   }
 
+  async function deleteLink(link) {
+    if (!link.slug) {
+      setError('This link cannot be deleted because it is missing a slug.');
+      return;
+    }
+
+    setError('');
+
+    try {
+      setDeletingId(link.id);
+      const response = await fetch(`${API_BASE}/${encodeURIComponent(link.slug)}`, {
+        method: 'DELETE'
+      });
+
+      if (!response.ok && response.status !== 204) {
+        const payload = await response.json().catch(() => ({}));
+        throw new Error(payload.error || payload.message || 'Unable to delete this URL.');
+      }
+
+      setLinks((current) => current.filter((item) => item.id !== link.id));
+      setResult((current) => (current?.id === link.id ? null : current));
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setDeletingId('');
+    }
+  }
+
   return (
     <main className="app-shell">
       <section className="hero-panel">
@@ -222,9 +251,19 @@ function App() {
                       {link.createdAt && <span>{new Date(link.createdAt).toLocaleDateString()}</span>}
                     </div>
                   </div>
-                  <button type="button" className="secondary-button" onClick={() => copyShortUrl(link)}>
-                    {copiedId === link.id ? 'Copied' : 'Copy'}
-                  </button>
+                  <div className="link-actions">
+                    <button type="button" className="secondary-button" onClick={() => copyShortUrl(link)}>
+                      {copiedId === link.id ? 'Copied' : 'Copy'}
+                    </button>
+                    <button
+                      type="button"
+                      className="danger-button"
+                      onClick={() => deleteLink(link)}
+                      disabled={deletingId === link.id}
+                    >
+                      {deletingId === link.id ? 'Deleting...' : 'Delete'}
+                    </button>
+                  </div>
                 </article>
               );
             })}

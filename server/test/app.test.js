@@ -50,6 +50,28 @@ test('creates, lists, reads, and redirects a shortened URL', async () => {
   assert.equal(redirectResponse.headers.get('location'), longUrl);
 });
 
+test('deletes a shortened URL', async () => {
+  const longUrl = `https://example.com/delete-${Date.now()}`;
+
+  const createResponse = await fetch(`${baseUrl}/api/urls`, {
+    method: 'POST',
+    headers: { 'content-type': 'application/json' },
+    body: JSON.stringify({ longUrl })
+  });
+
+  assert.equal(createResponse.status, 201);
+  const created = (await createResponse.json()).data;
+
+  const deleteResponse = await fetch(`${baseUrl}/api/urls/${created.slug}`, {
+    method: 'DELETE'
+  });
+
+  assert.equal(deleteResponse.status, 204);
+
+  const detailResponse = await fetch(`${baseUrl}/api/urls/${created.slug}`);
+  assert.equal(detailResponse.status, 404);
+});
+
 test('rejects invalid URLs and duplicate custom slugs', async () => {
   const invalidResponse = await fetch(`${baseUrl}/api/urls`, {
     method: 'POST',

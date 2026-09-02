@@ -89,6 +89,16 @@ Expected response:
 - Status: `404` for an unknown slug.
 - Body: URL metadata for the slug.
 
+## Delete URL
+
+`DELETE /api/urls/:slug`
+
+Expected response:
+
+- Status: `204` for an existing slug.
+- Status: `404` for an unknown slug.
+- Status: `400` for an invalid slug.
+
 ## Redirect
 
 `GET /:slug`

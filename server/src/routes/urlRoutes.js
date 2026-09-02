@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import {
   createShortUrl,
+  deleteUrlBySlug,
   getRecentUrls,
   getUrlBySlug,
   hasSlug
@@ -50,6 +51,20 @@ router.get('/:slug', (req, res) => {
   }
 
   return res.json({ data: link });
+});
+
+router.delete('/:slug', (req, res) => {
+  const slugResult = validateSlug(req.params.slug);
+
+  if (!slugResult.valid) {
+    return res.status(400).json({ error: slugResult.error });
+  }
+
+  if (!deleteUrlBySlug(req.params.slug)) {
+    return res.status(404).json({ error: 'Short URL not found.' });
+  }
+
+  return res.status(204).send();
 });
 
 function buildUniqueSlug() {

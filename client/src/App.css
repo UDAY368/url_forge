@@ -208,6 +208,16 @@ button:disabled {
   background: #d8e2ed;
 }
 
+.danger-button {
+  min-width: 88px;
+  color: #8a1e24;
+  background: #ffe8ea;
+}
+
+.danger-button:hover:not(:disabled) {
+  background: #ffd5da;
+}
+
 .links-section {
   padding: 28px 0 0;
 }
@@ -254,6 +264,11 @@ button:disabled {
 
 .link-content {
   min-width: 0;
+}
+
+.link-actions {
+  display: flex;
+  gap: 10px;
 }
 
 .link-card p {
@@ -310,6 +325,14 @@ button:disabled {
   }
 
   .secondary-button {
+    width: 100%;
+  }
+
+  .link-actions {
+    flex-direction: column;
+  }
+
+  .link-actions button {
     width: 100%;
   }
 }

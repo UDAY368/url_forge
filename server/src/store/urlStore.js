@@ -29,6 +29,10 @@ export function getRecentUrls(limit = 20) {
     .map(copyLink);
 }
 
+export function deleteUrlBySlug(slug) {
+  return urlsBySlug.delete(slug);
+}
+
 export function hasSlug(slug) {
   return urlsBySlug.has(slug);
 }
